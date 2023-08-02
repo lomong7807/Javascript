@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.공공데이터포털</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b88c9dca180752d95b07980948624731"></script>
+    <!--
+        날짜 : 2023/08/02
+        이름 : 강윤수
+        내용 : 공공데이터 활용 실습하기
+    -->
+    <script>
+
+    window.onload = function(){
+        var mapContainer = document.getElementById('map2'), // 지도를 표시할 div 
+        mapOption = { 
+            center: new kakao.maps.LatLng(35.13712816270451, 129.09888242951712 ), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+    
+        // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+        var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+        const url = 'https://apis.data.go.kr/6260000/BusanAnimalHospService/getTblAnimalHospital?serviceKey=wsP1atCh7p7yePFGCnqIaWUolJO%2FYs%2B0NZyFWnOiG1n%2Bb3QtHxLrP%2B7%2BkGXADgFT0idJ6YQSDzQFUrXHlriliw%3D%3D&pageNo=1&numOfRows=200&resultType=json';
+
+        fetch(url)
+            .then((res)=>res.json())
+            .then((data)=>{
+                console.log(data.getTblAnimalHospital.body.items.item);
+                const hospitals = data.getTblAnimalHospital.body.items.item;
+
+                for(let hospital of hospitals){
+                    console.log(hospital.animal_hospital);
+
+                    let marker = new kakao.maps.Marker({
+                        map: map, // 마커를 표시할 지도
+                        position: new kakao.maps.LatLng(hospital.lat, hospital.lon), // 마커를 표시할 위치
+                        title: hospital.animal_hospital
+                    });
+
+                    marker.setMap(map);
+                }
+            });
+        }
+
+        /*
+        $(function(){
+            var mapContainer = document.getElementById('map2'), // 지도를 표시할 div 
+            mapOption = { 
+                center: new kakao.maps.LatLng(35.13712816270451, 129.09888242951712 ), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+        
+            // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+            var map = new kakao.maps.Map(mapContainer, mapOption); 
+            $.ajax({
+                url:'https://apis.data.go.kr/6260000/BusanAnimalHospService/getTblAnimalHospital?serviceKey=wsP1atCh7p7yePFGCnqIaWUolJO%2FYs%2B0NZyFWnOiG1n%2Bb3QtHxLrP%2B7%2BkGXADgFT0idJ6YQSDzQFUrXHlriliw%3D%3D&pageNo=1&numOfRows=200&resultType=json',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data){
+                    console.log(data.getTblAnimalHospital.body.items.item);
+
+                    const hospitals = data.getTblAnimalHospital.body.items.item;
+
+                    for(let hospital of hospitals){
+                        console.log(hospital.animal_hospital);
+
+                        let marker = new kakao.maps.Marker({
+                            map: map, // 마커를 표시할 지도
+                            position: new kakao.maps.LatLng(hospital.lat, hospital.lon), // 마커를 표시할 위치
+                            title: hospital.animal_hospital
+                        });
+
+                        marker.setMap(map);
+                    }
+                }
+            });
+        });*/
+
+    </script>
+</head>
+    <h3>2.공공데이터포털</h3>>
+
+    <h4>부산 동물병원 위치</h4>
+    <div id="map2" style="width:1200px;height:800px;"></div>
+    
+        <script>
+        
+        </script>
+<body>
+    
+</body>
+</html>
